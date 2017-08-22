@@ -146,3 +146,16 @@
      (recursive-printer (inc iteration)))))
 
   (recursive-printer)
+
+;; ------- REGULAR EXPRESSIONS -------
+(re-find #"^left-" "left-eye")
+(re-find #"^left-" "cleft-chin")
+(re-find #"^left-" "wongleblart")
+
+(defn matching-part
+  [part]
+  {:name (clojure.string/replace (:name part) #"^left-" "right-")
+   :size (:size part)})
+
+(matching-part {:name "left-eye" :size 1})
+(matching-part {:name "head" :size 3})
