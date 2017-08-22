@@ -159,3 +159,29 @@
 
 (matching-part {:name "left-eye" :size 1})
 (matching-part {:name "head" :size 3})
+
+;; ------- REDUCE -------
+(reduce + [1 2 3 4 5])
+(reduce + 15 [1 2 3 4 5])
+
+(defn better-symmetrize-body-parts
+  "Expects a seq of maps that hace a :name and :size"
+  [asym-body-parts]
+  (reduce (fn [final-body-parts part]
+            (into final-body-parts (set [part (matching-part part)])))
+          ;;Second parameter in reduce, in this case, a empty list
+            []
+            asym-body-parts))
+
+(better-symmetrize-body-parts asym-hobbit-body-parts)
+
+(defn hit
+  [asym-body-parts]
+  (let [sym-parts (better-symmetrize-body-parts asym-body-parts)
+        body-part-size-sum (reduce + (map :size sym-parts))
+        target (rand body-part-size-sum)]
+    (loop [[part & remaining] sym-parts
+           accumulated-size (:size part)]
+      (if (> accumulated-size target)
+        part
+        (recur remaining (+ accumulated-size (:size (first remaining))))))))
