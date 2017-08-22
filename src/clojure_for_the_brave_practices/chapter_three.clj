@@ -110,8 +110,7 @@
 
 (symmetrize-body-parts asym-hobbit-body-parts)
 
-;;let
-
+;; ------- LET -------
 (let [x 3]
   x )
 
@@ -129,4 +128,21 @@
 (let [[pongo perdita & dalmatians] dalmatian-list]
   [pongo perdita dalmatians])
 
-;;loop
+;; ------- LOOP -------
+
+(loop [iteration 0]
+  (println (str "Iteration: " iteration))
+  (if (> iteration 3)
+    (println "Goodbye!")
+    (recur (inc iteration))))
+
+(defn recursive-printer
+  ([]
+   (recursive-printer 0))
+  ([iteration]
+   (println iteration)
+   (if (> iteration 3)
+     (println "Goodbye!")
+     (recursive-printer (inc iteration)))))
+
+  (recursive-printer)
